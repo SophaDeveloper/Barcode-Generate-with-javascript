@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link type="text/css" rel="stylesheet" href="./prints/PrintArea.css" />
+    <title>Barcode</title>
+</head>
+<body>
+    <input type="button" onclick="generateBarcode()" class="btn btn-success form-control" value="Generate">
+
+				<div class="text-center PrintArea" style="margin-left: 20px;">
+					<svg class="barcode"></svg><br>
+				</div>
+				<button onclick="print()">Print</button>
+    <script src="./js/jquery-3.6.0.min.js"></script>
+	<script src="./prints/jquery.PrintArea.js" type="text/JavaScript" language="javascript" ></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.3/dist/JsBarcode.all.min.js"></script>
+	<script type="text/javascript">
+		function print(){
+			var mode = "iframe";
+			var close = mode == "popup" && $("input#closePop").is(":checked");
+			var extraCss = null;
+
+			//ເກັບເອົາພື້ນທີ່ທີ່ຕ້ອງການພິມ
+			var print = "div.PrintArea";
+			/* $("input.selPA:checked").each(function() {
+									print += (print.length > 0 ? "," : "") + "div.PrintArea." + $(this).val();
+								}); */
+
+			//ເກັບເອົາຄຸນສົມຂອງບິນໃນການພິມ
+			var keepAttr = [];
+
+			var headElements =
+				'<meta charset="utf-8" />,<meta http-equiv="X-UA-Compatible" content="IE=edge"/>';
+			var options = {
+				mode: mode,
+				popClose: close,
+				extraCss: extraCss,
+				retainAttr: keepAttr,
+				extraHead: headElements,
+			};
+			$(print).printArea(options);
+		}
+		function generateBarcode(){
+			var barcodeValue = '13135153183';
+			var barcodeType = 'Code 128';	
+			var showText = 'Product';			
+			JsBarcode(".barcode", barcodeValue, {
+				format: barcodeType,
+				displayValue: showText,
+				lineColor: "#24292e",
+				width:2,
+				height:40,	
+				fontSize: 20					
+			});		
+		}
+		generateBarcode();
+	</script>
+</body>
+</html>
